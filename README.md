@@ -14,6 +14,9 @@ npm install
 npm start
 ```
 
+Use your player to play
+http://localhost:32888/tv.m3u
+
 ## License
 
 MIT
