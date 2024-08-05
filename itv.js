@@ -205,7 +205,7 @@ const iptvProgram = {
 
 const staticLookup = async (hostname, opts, cb) => {
     const host = hostMapping[hostname] || hostname
-    dns.lookup(host, opts, (err, results) => cb(err, results))
+    dns.lookup(host, opts, (err, results, family) => cb(err, results, family))
 }
 
 const agent = new http.Agent({
@@ -239,7 +239,7 @@ export async function handleMain(req, reply, cdn, rid) {
         reply.code(200).send(newList)
     } catch(e) {
         req.log.error(e)
-        resp.code(500).send('Internal Server Error')
+        reply.code(500).send('Internal Server Error')
     }
 }
 
