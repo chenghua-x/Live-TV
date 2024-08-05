@@ -220,16 +220,16 @@ export async function handleMain(req, reply, cdn, rid) {
     }
 
     try{
-        const url = new URL(programMainUrl)
-        const resp = await fetch(url, {
+        const resp = await fetch(programMainUrl, {
             agent,
             redirect: 'follow'
         })
 
         const tsList = await resp.text()
+        const finalReqUrl = new URL(resp.url)
         const newList = tsList.split('\n').map(line => {
             if (line.includes('.ts')) {
-                const ts = `${url.protocol}//${url.host}${url.pathname.substring(0, url.pathname.lastIndexOf('/'))}/${line}`.replaceAll('&', "$")
+                const ts = `${finalReqUrl.protocol}//${finalReqUrl.host}${finalReqUrl.pathname.substring(0, finalReqUrl.pathname.lastIndexOf('/'))}/${line}`.replaceAll('&', "$")
                 return `${req.protocol}://${req.hostname}${req.url.substring(0, req.url.lastIndexOf('?'))}?ts=${ts}`
             } else {
                 return line
