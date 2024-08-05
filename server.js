@@ -40,7 +40,7 @@ fastify.get(`/:path/:rid`, async (request, reply) => {
     }
 })
 
-fastify.listen({ port: 32888 }, (err, address) => {
+fastify.listen({ port: 32888, host: '0.0.0.0' }, (err, address) => {
     if (err) throw err
     console.log(`Server is now listening on ${address}`)
 })
