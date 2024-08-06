@@ -8,14 +8,14 @@ const fastify = Fastify({
     logger: true
 })
 
+const address = process.env['ADDRESS']
 const basePath = process.argv[2] ? `/${process.argv[2]}` : process.env['BASE_PATH'] ? `/${process.env['BASE_PATH']}` : ''
 
 fastify.get(`${basePath}/tv.m3u`, (req, reply) => {
     reply.header('Content-Type', 'application/octet-stream')
     reply.header('Content-Disposition', 'attachment; filename=tv.m3u')
 
-    const rootPath = `${req.protocol}://${req.hostname}${basePath}`
-    
+    const rootPath = address??`${req.protocol}://${req.hostname}`
     reply.send(getPlayList(rootPath))
 })
 

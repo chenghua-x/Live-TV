@@ -45,6 +45,7 @@ const ysProgram = {
 }
 
 
+const address = process.env['ADDRESS']
 const staticLookup = async (hostname, opts, cb) => {
     const host = hostMapping[hostname] || hostname
     dns.lookup(host, opts, (err, results) => cb(err, results))
@@ -65,11 +66,12 @@ export async function handleMain(req, reply, rid) {
     try {
         const url = programMainUrl.split(',')
         const tsList = await getPlayUrls(rid, url[0], uid, url[1])
+        const rootPath = address??`${req.protocol}://${req.hostname}`
         const newList = tsList.split('\n').map(line => {
             if (line.toLowerCase().includes('.ts')) {
                 const prefixUrl = new URL(url[1])
                 const ts = `${prefixUrl.protocol}//${prefixUrl.host}${prefixUrl.pathname.substring(0, prefixUrl.pathname.lastIndexOf('/'))}/${line}`.replaceAll('&', "$")
-                return `${req.protocol}://${req.hostname}${req.url}?ts=${ts}`
+                return `${address}${req.url}?ts=${ts}`
             } else {
                 return line
             }
