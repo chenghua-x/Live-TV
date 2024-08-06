@@ -1,4 +1,3 @@
-import { Readable } from 'node:stream'
 import dns from "dns"
 import http from 'http'
 import fetch from 'node-fetch'
@@ -140,7 +139,7 @@ async function getPlayUrls(id, url, uid, path) {
     }, uid)
 
     const data = await resp.json()
-    console.log('data1', data)
+    // console.log('data1', data)
     const playUrl = data.url
 
     setCache(cacheKey, playUrl)

@@ -218,23 +218,22 @@ function extendCacheTime(hostname) {
 }
 
 const staticLookup = async (hostname, opts, cb) => {
-
     if (dnsCache.has(hostname)) {
         const cache = dnsCache.get(hostname)
         if (cache.expired > Date.now()) {
-            cb(null, [cache.address], cache.address.family)
+            cb(null, opts.all ? [cache.address] : cache.address.address, cache.address.family)
             return
         }
     }
 
     // new lookup
     const host = hostMapping[hostname] || hostname // redirect resolve
-    dns.lookup(host, opts, (err, results, family) => {
+    dns.lookup(host, {...opts, all: true, family: 4}, (err, results, family) => {
         if (results?.length > 0) {
             // random one result
             const address = results[Math.floor(Math.random() * results.length)]
             dnsCache.set(hostname, {address, expired: Date.now() + CACHE_TIME})
-            cb(err, [address], address.family)
+            cb(err, opts.all ? [address] : address.address, address.family)
         } else {
             cb(err, results, family)
         }
