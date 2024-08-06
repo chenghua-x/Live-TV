@@ -1,7 +1,6 @@
 
 export function getPlayList(host) {
-    return `
-#EXTM3U x-tvg-url="https://epg.v1.mk/fy.xml"
+    return `#EXTM3U x-tvg-url="https://epg.v1.mk/fy.xml"
 #EXTINF:-1 tvg-name="4K60PSDR-H264-AAC测试" tvg-logo="https://cdn.jsdelivr.net/gh/feiyangdigital/testvideo/tg.jpg" group-title="4K频道",4K60PSDR-H264-AAC测试
 https://cdn.jsdelivr.net/gh/feiyangdigital/testvideo/sdr4kvideo/index.m3u8
 #EXTINF:-1 tvg-name="4K60PHLG-HEVC-EAC3测试" tvg-logo="https://cdn.jsdelivr.net/gh/feiyangdigital/testvideo/tg.jpg" group-title="4K频道",4K60PHLG-HEVC-EAC3测试
@@ -443,6 +442,5 @@ http://${host}/itv/6000000006000050630.m3u8?cdn=wasusyt
 #EXTINF:-1,tvg-id="IHOT爱幼教" tvg-name="IHOT爱幼教" tvg-logo="https://epg.v1.mk/logo/IHOT爱幼教.png" group-title="IHOT",iHOT-爱幼教
 http://${host}/itv/6000000006000180630.m3u8?cdn=wasusyt
 #EXTINF:-1,tvg-id="IHOT爱院线" tvg-name="IHOT爱院线" tvg-logo="https://epg.v1.mk/logo/IHOT爱院线.png" group-title="IHOT",iHOT-爱院线
-http://${host}/itv/6000000006000030630.m3u8?cdn=wasusyt
-`
+http://${host}/itv/6000000006000030630.m3u8?cdn=wasusyt`
 }
