@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import { getPlayList } from './list.js'
-import itv from './itv.js'
+import itv, { setup } from './itv.js'
 import ysptp from './ysptp.js'
 
 
@@ -41,6 +41,7 @@ fastify.get(`/:path/:rid`, async (request, reply) => {
 })
 
 const start = async () => {
+    itv.setup(fastify)
     try {
         await fastify.listen({ port: 32888, host: '0.0.0.0' })
     } catch (err) {

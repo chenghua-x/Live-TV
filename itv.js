@@ -251,7 +251,6 @@ export async function handleMain(req, reply, cdn, rid) {
         return
     }
 
-    let finalReqUrl = new URL(programMainUrl)
     try{
         const resp = await fetch(programMainUrl, {
             signal: AbortSignal.timeout(10000),
@@ -259,14 +258,12 @@ export async function handleMain(req, reply, cdn, rid) {
             redirect: 'follow'
         })
 
-        finalReqUrl = new URL(resp.url)
+        const finalReqUrl = new URL(resp.url)
+        reply.finalReqUrl = finalReqUrl
         if (!resp.ok) {
-            invalidateCache(finalReqUrl.host)
             reply.code(resp.status).send(resp.statusText)
             return
-        } else {
-            extendCacheTime(finalReqUrl.hostname)
-        }
+        } 
 
         const tsList = await resp.text()
         const newList = tsList.split('\n').map(line => {
@@ -280,7 +277,6 @@ export async function handleMain(req, reply, cdn, rid) {
             
         reply.code(200).send(newList)
     } catch(e) {
-        invalidateCache(finalReqUrl.host)
         req.log.error(e)
         reply.code(500).send('Internal Server Error')
     }
@@ -289,7 +285,6 @@ export async function handleMain(req, reply, cdn, rid) {
 export async function handleTs(req, reply, ts, wsTime) {
     const tsUrl = ts.replaceAll('$', "&")
 
-    const finalReqUrl = new URL(tsUrl)
     try {
         const resp = await fetch(tsUrl, {
             signal: AbortSignal.timeout(10000),
@@ -297,25 +292,39 @@ export async function handleTs(req, reply, ts, wsTime) {
             redirect: 'follow'
         })
 
+        reply.finalReqUrl = new URL(resp.url)
         if (!resp.ok) {
-            invalidateCache(finalReqUrl.hostname)
             reply.code(resp.status).send(resp.statusText)
             return
-        } else {
-            extendCacheTime(finalReqUrl.hostname)
-        }
+        } 
 
         reply.header('Content-Type', resp.headers.get('Content-Type'))
         reply.header('Content-Length', resp.headers.get('Content-Length'))
         return reply.send(resp.body)
     } catch(e) {
-        invalidateCache(finalReqUrl.hostname)
         req.log.error(e)
         reply.code(500).send('Internal Server Error')
     }
 }
 
+export function setup(app) {
+    app.addHook('onResponse', (request, reply, done) => {
+        const finalReqUrl = reply.finalReqUrl
+        if (finalReqUrl) {
+            if(reply.statusCode >= 400 || reply.getResponseTime() > 500) {
+                app.log.warn('Remove DNS cache for ' + finalReqUrl.hostname);
+                invalidateCache(finalReqUrl.hostname)
+            } else {
+                extendCacheTime(finalReqUrl.hostname)
+            }
+        }
+
+        return done()
+    })
+}
+
 export default {
+    setup,
     handleMain,
     handleTs
 }
