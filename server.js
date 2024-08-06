@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import { getPlayList } from './list.js'
-import itv, { setup } from './itv.js'
+import itv from './itv.js'
 import ysptp from './ysptp.js'
 
 
@@ -8,7 +8,7 @@ const fastify = Fastify({
     logger: true
 })
 
-const basePath = ''
+const basePath = process.argv[2] ? `/${process.argv[2]}` : process.env['BASE_PATH'] ? `/${process.env['BASE_PATH']}` : ''
 
 fastify.get(`${basePath}/tv.m3u`, (request, reply) => {
     reply.header('Content-Type', 'application/octet-stream')
