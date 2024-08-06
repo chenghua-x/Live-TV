@@ -10,10 +10,13 @@ const fastify = Fastify({
 
 const basePath = process.argv[2] ? `/${process.argv[2]}` : process.env['BASE_PATH'] ? `/${process.env['BASE_PATH']}` : ''
 
-fastify.get(`${basePath}/tv.m3u`, (request, reply) => {
+fastify.get(`${basePath}/tv.m3u`, (req, reply) => {
     reply.header('Content-Type', 'application/octet-stream')
     reply.header('Content-Disposition', 'attachment; filename=tv.m3u')
-    reply.send(getPlayList(request.hostname))
+
+    const rootPath = `${req.protocol}://${req.hostname}${basePath}`
+    
+    reply.send(getPlayList(rootPath))
 })
 
 fastify.get(`/:path/:rid`, async (request, reply) => {
