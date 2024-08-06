@@ -252,13 +252,14 @@ export async function handleMain(req, reply, cdn, rid) {
     }
 
     try{
+        reply.finalReqUrl = new URL(programMainUrl)
         const resp = await fetch(programMainUrl, {
             signal: AbortSignal.timeout(10000),
             agent,
             redirect: 'follow'
         })
 
-        const finalReqUrl = new URL(resp.url)
+        const finalReqUrl = new URL(resp.url) // url after redirect
         reply.finalReqUrl = finalReqUrl
         if (!resp.ok) {
             reply.code(resp.status).send(resp.statusText)
@@ -286,13 +287,14 @@ export async function handleTs(req, reply, ts, wsTime) {
     const tsUrl = ts.replaceAll('$', "&")
 
     try {
+        reply.finalReqUrl = new URL(tsUrl)
         const resp = await fetch(tsUrl, {
             signal: AbortSignal.timeout(10000),
             agent,
             redirect: 'follow'
         })
 
-        reply.finalReqUrl = new URL(resp.url)
+        reply.finalReqUrl = new URL(resp.url) // url after redirect
         if (!resp.ok) {
             reply.code(resp.status).send(resp.statusText)
             return
@@ -311,7 +313,7 @@ export function setup(app) {
     app.addHook('onResponse', (request, reply, done) => {
         const finalReqUrl = reply.finalReqUrl
         if (finalReqUrl) {
-            if(reply.statusCode >= 400 || reply.getResponseTime() > 500) {
+            if(reply.statusCode >= 400 || reply.elapsedTime > 600) {
                 app.log.warn('Remove DNS cache for ' + finalReqUrl.hostname);
                 invalidateCache(finalReqUrl.hostname)
             } else {
