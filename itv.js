@@ -315,7 +315,7 @@ export function setup(app) {
     app.addHook('onResponse', (request, reply, done) => {
         const finalReqUrl = reply.finalReqUrl
         if (finalReqUrl) {
-            if(reply.statusCode >= 400 || reply.elapsedTime > 600) {
+            if(reply.statusCode >= 400 || reply.elapsedTime > 2000) {
                 app.log.warn('Remove DNS cache for ' + finalReqUrl.hostname);
                 invalidateCache(finalReqUrl.hostname)
             } else {
