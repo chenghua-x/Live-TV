@@ -203,9 +203,42 @@ const iptvProgram = {
 }
 
 
+const CACHE_TIME = 3600_000 // 1 hour
+const dnsCache = new Map()
+
+function invalidateCache(hostname) {
+    dnsCache.delete(hostname)
+}
+
+function extendCacheTime(hostname) {
+    const cache = dnsCache.get(hostname)
+    if (cache) {
+        cache.expired = Date.now() + CACHE_TIME
+    }
+}
+
 const staticLookup = async (hostname, opts, cb) => {
-    const host = hostMapping[hostname] || hostname
-    dns.lookup(host, opts, (err, results, family) => cb(err, results, family))
+
+    if (dnsCache.has(hostname)) {
+        const cache = dnsCache.get(hostname)
+        if (cache.expired > Date.now()) {
+            cb(null, [cache.address], cache.address.family)
+            return
+        }
+    }
+
+    // new lookup
+    const host = hostMapping[hostname] || hostname // redirect resolve
+    dns.lookup(host, opts, (err, results, family) => {
+        if (results?.length > 0) {
+            // random one result
+            const address = results[Math.floor(Math.random() * results.length)]
+            dnsCache.set(hostname, {address, expired: Date.now() + CACHE_TIME})
+            cb(err, [address], address.family)
+        } else {
+            cb(err, results, family)
+        }
+    })
 }
 
 const agent = new http.Agent({
@@ -219,14 +252,24 @@ export async function handleMain(req, reply, cdn, rid) {
         return
     }
 
+    let finalReqUrl = new URL(programMainUrl)
     try{
         const resp = await fetch(programMainUrl, {
+            signal: AbortSignal.timeout(10000),
             agent,
             redirect: 'follow'
         })
 
+        finalReqUrl = new URL(resp.url)
+        if (!resp.ok) {
+            clearCacheTime(finalReqUrl.host)
+            reply.code(resp.status).send(resp.statusText)
+            return
+        } else {
+            extendCacheTime(finalReqUrl.hostname)
+        }
+
         const tsList = await resp.text()
-        const finalReqUrl = new URL(resp.url)
         const newList = tsList.split('\n').map(line => {
             if (line.includes('.ts')) {
                 const ts = `${finalReqUrl.protocol}//${finalReqUrl.host}${finalReqUrl.pathname.substring(0, finalReqUrl.pathname.lastIndexOf('/'))}/${line}`.replaceAll('&', "$")
@@ -238,6 +281,7 @@ export async function handleMain(req, reply, cdn, rid) {
             
         reply.code(200).send(newList)
     } catch(e) {
+        clearCacheTime(finalReqUrl.host)
         req.log.error(e)
         reply.code(500).send('Internal Server Error')
     }
@@ -246,16 +290,27 @@ export async function handleMain(req, reply, cdn, rid) {
 export async function handleTs(req, reply, ts, wsTime) {
     const tsUrl = ts.replaceAll('$', "&")
 
+    const finalReqUrl = new URL(tsUrl)
     try {
         const resp = await fetch(tsUrl, {
+            signal: AbortSignal.timeout(10000),
             agent,
             redirect: 'follow'
         })
+
+        if (!resp.ok) {
+            clearCacheTime(finalReqUrl.hostname)
+            reply.code(resp.status).send(resp.statusText)
+            return
+        } else {
+            extendCacheTime(finalReqUrl.hostname)
+        }
 
         reply.header('Content-Type', resp.headers.get('Content-Type'))
         reply.header('Content-Length', resp.headers.get('Content-Length'))
         return reply.send(resp.body)
     } catch(e) {
+        clearCacheTime(finalReqUrl.hostname)
         req.log.error(e)
         reply.code(500).send('Internal Server Error')
     }

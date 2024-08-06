@@ -6,14 +6,14 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strings"
 	"sync"
 	"time"
 )
 
-type Itv struct {
-}
+type Itv struct{}
 
 var (
 	hostMappings = map[string]string{
@@ -214,8 +214,8 @@ var (
 		"wasusyt/6000000006000030630.m3u8":     "http://gslbserv.itv.cmvideo.cn:80/6000000006000030630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000030630&livemode=1&stbId=3",
 	}
 
-	dnsCache     = sync.Map{}
-	cacheTimeout = 1 * time.Millisecond
+	dnsCache         = sync.Map{}
+	successCacheTime = 24 * time.Hour
 )
 
 type cacheEntry struct {
@@ -225,13 +225,13 @@ type cacheEntry struct {
 
 func (i *Itv) HandleMainRequest(c *gin.Context, cdn, id string) {
 	key := cdn + "/" + id
-	url, ok := programList[key]
+	startUrl, ok := programList[key]
 	if !ok {
 		c.String(http.StatusNotFound, "id not found!")
 		return
 	}
 
-	data, redirectURL, err := getHTTPResponse(url)
+	data, redirectURL, err := getHTTPResponse(startUrl)
 	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())
 		return
@@ -294,9 +294,15 @@ func getHTTPResponse(requestURL string) (string, string, error) {
 
 	resp, err := client.Get(requestURL)
 	if err != nil {
+		clearCache(requestURL) // 清除缓存失败的IP
 		return "", "", err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		clearCache(requestURL) // 请求失败清除缓存
+		return "", "", err
+	}
 
 	redirectURL := resp.Header.Get("Location")
 	if redirectURL == "" {
@@ -305,8 +311,11 @@ func getHTTPResponse(requestURL string) (string, string, error) {
 
 	body, err := readResponseBody(resp)
 	if err != nil {
+		clearCache(requestURL) // 读取响应体失败时清除缓存
 		return "", "", err
 	}
+
+	updateCacheTime(requestURL, successCacheTime) // 成功获取响应后缓存IP
 
 	return body, redirectURL, nil
 }
@@ -316,19 +325,39 @@ func resolveIP(host string) string {
 	if entry, found := dnsCache.Load(host); found {
 		cachedEntry := entry.(cacheEntry)
 		if now.Before(cachedEntry.expiry) {
-			return cachedEntry.ip
+			return cachedEntry.ip // 使用缓存中的IP
 		}
-		dnsCache.Delete(host)
+		dnsCache.Delete(host) // 缓存过期，删除
 	}
 
-	ips, err := net.LookupIP(host)
+	ips, err := net.LookupIP(host) // DNS解析
 	if err != nil || len(ips) == 0 {
+		return "" // 解析失败，返回空字符串
+	}
+
+	return ips[0].String() // 返回解析到的IP
+}
+
+func updateCacheTime(requestURL string, duration time.Duration) {
+	host := extractHost(requestURL)
+	if entry, found := dnsCache.Load(host); found {
+		cachedEntry := entry.(cacheEntry)
+		cachedEntry.expiry = time.Now().Add(duration) // 更新缓存过期时间
+		dnsCache.Store(host, cachedEntry)
+	}
+}
+
+func clearCache(requestURL string) {
+	host := extractHost(requestURL)
+	dnsCache.Delete(host) // 删除缓存
+}
+
+func extractHost(requestURL string) string {
+	parsedURL, err := url.Parse(requestURL)
+	if err != nil {
 		return ""
 	}
-
-	ip := ips[0].String()
-	dnsCache.Store(host, cacheEntry{ip: ip, expiry: now.Add(cacheTimeout)})
-	return ip
+	return parsedURL.Host
 }
 
 func readResponseBody(resp *http.Response) (string, error) {

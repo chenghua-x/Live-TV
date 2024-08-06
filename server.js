@@ -17,8 +17,8 @@ fastify.get(`${basePath}/tv.m3u`, (request, reply) => {
 })
 
 fastify.get(`/:path/:rid`, async (request, reply) => {
-    const {path, rid} = request.params
-    const {ts, cdn, wsTime} = request.query
+    const { path, rid } = request.params
+    const { ts, cdn, wsTime } = request.query
     switch (path) {
         case "itv":
             if (ts) {
@@ -40,7 +40,12 @@ fastify.get(`/:path/:rid`, async (request, reply) => {
     }
 })
 
-fastify.listen({ port: 32888, host: '0.0.0.0' }, (err, address) => {
-    if (err) throw err
-    console.log(`Server is now listening on ${address}`)
-})
+const start = async () => {
+    try {
+        await fastify.listen({ port: 32888, host: '0.0.0.0' })
+    } catch (err) {
+        fastify.log.error(err)
+        process.exit(1)
+    }
+}
+start()

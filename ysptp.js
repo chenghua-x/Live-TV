@@ -156,6 +156,7 @@ async function fetchData(playUrl, path, uid) {
 async function clientFetch(url, opts, uid) {
     const resp = await fetch(url, {
         ...opts,
+        redirect:'follow',
         headers: {
             "User-Agent": "cctv_app_tv",
             "Referer": "api.cctv.cn",
