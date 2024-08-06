@@ -262,7 +262,7 @@ export async function handleMain(req, reply, cdn, rid) {
 
         finalReqUrl = new URL(resp.url)
         if (!resp.ok) {
-            clearCacheTime(finalReqUrl.host)
+            invalidateCache(finalReqUrl.host)
             reply.code(resp.status).send(resp.statusText)
             return
         } else {
@@ -281,7 +281,7 @@ export async function handleMain(req, reply, cdn, rid) {
             
         reply.code(200).send(newList)
     } catch(e) {
-        clearCacheTime(finalReqUrl.host)
+        invalidateCache(finalReqUrl.host)
         req.log.error(e)
         reply.code(500).send('Internal Server Error')
     }
@@ -299,7 +299,7 @@ export async function handleTs(req, reply, ts, wsTime) {
         })
 
         if (!resp.ok) {
-            clearCacheTime(finalReqUrl.hostname)
+            invalidateCache(finalReqUrl.hostname)
             reply.code(resp.status).send(resp.statusText)
             return
         } else {
@@ -310,7 +310,7 @@ export async function handleTs(req, reply, ts, wsTime) {
         reply.header('Content-Length', resp.headers.get('Content-Length'))
         return reply.send(resp.body)
     } catch(e) {
-        clearCacheTime(finalReqUrl.hostname)
+        invalidateCache(finalReqUrl.hostname)
         req.log.error(e)
         reply.code(500).send('Internal Server Error')
     }
