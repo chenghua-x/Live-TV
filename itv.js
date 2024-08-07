@@ -203,7 +203,7 @@ const iptvProgram = {
 }
 
 
-const address = process.env['ADDRESS']
+let opts = {}
 const CACHE_TIME = 3600_000 // 1 hour
 const dnsCache = new Map()
 
@@ -268,7 +268,7 @@ export async function handleMain(req, reply, cdn, rid) {
         } 
 
         const tsList = await resp.text()
-        const rootPath = address??`${req.protocol}://${req.hostname}`
+        const rootPath = `${opts.proto || req.protocol}://${req.hostname}`
         const newList = tsList.split('\n').map(line => {
             if (line.includes('.ts')) {
                 const ts = `${finalReqUrl.protocol}//${finalReqUrl.host}${finalReqUrl.pathname.substring(0, finalReqUrl.pathname.lastIndexOf('/'))}/${line}`.replaceAll('&', "$")
@@ -311,7 +311,8 @@ export async function handleTs(req, reply, ts, wsTime) {
     }
 }
 
-export function setup(app) {
+export function setup(app, _opts) {
+    opts = _opts
     app.addHook('onResponse', (request, reply, done) => {
         const finalReqUrl = reply.finalReqUrl
         if (finalReqUrl) {

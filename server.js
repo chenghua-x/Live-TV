@@ -5,21 +5,22 @@ import ysptp from './ysptp.js'
 
 
 const fastify = Fastify({
-    logger: true
+    logger: true,
+    trustProxy: true,
 })
 
-const address = process.env['ADDRESS']
 const basePath = process.argv[2] ? `/${process.argv[2]}` : process.env['BASE_PATH'] ? `/${process.env['BASE_PATH']}` : ''
+const proto = process.argv[3] ? `/${process.argv[3]}` : process.env['PROTO'] ? `/${process.env['PROTO']}` : ''
 
 fastify.get(`${basePath}/tv.m3u`, (req, reply) => {
     reply.header('Content-Type', 'application/octet-stream')
     reply.header('Content-Disposition', 'attachment; filename=tv.m3u')
 
-    const rootPath = address??`${req.protocol}://${req.hostname}`
+    const rootPath = `${proto || req.protocol}://${req.hostname}${basePath??''}`
     reply.send(getPlayList(rootPath))
 })
 
-fastify.get(`/:path/:rid`, async (request, reply) => {
+fastify.get(`${basePath}/:path/:rid`, async (request, reply) => {
     const { path, rid } = request.params
     const { ts, cdn, wsTime } = request.query
     switch (path) {
@@ -43,34 +44,9 @@ fastify.get(`/:path/:rid`, async (request, reply) => {
     }
 })
 
-fastify.post('/test/:params', function (request, reply) {
-    console.log(request.body)
-    console.log(request.query)
-    console.log(request.params)
-    console.log(request.headers)
-    console.log(request.raw)
-    console.log(request.server)
-    console.log(request.id)
-    console.log(request.ip)
-    console.log(request.ips)
-    console.log(request.hostname)
-    console.log(request.protocol)
-    console.log(request.url)
-    console.log(request.routeOptions.method)
-    console.log(request.routeOptions.bodyLimit)
-    console.log(request.routeOptions.method)
-    console.log(request.routeOptions.url)
-    console.log(request.routeOptions.attachValidation)
-    console.log(request.routeOptions.logLevel)
-    console.log(request.routeOptions.version)
-    console.log(request.routeOptions.exposeHeadRoute)
-    console.log(request.routeOptions.prefixTrailingSlash)
-    console.log(request.routeOptions.logLevel)
-    request.log.info('some info')
-  })
-
 const start = async () => {
-    itv.setup(fastify)
+    itv.setup(fastify, {proto, basePath})
+    ysptp.setup(fastify, {proto, basePath})
     try {
         await fastify.listen({ port: 32888, host: '0.0.0.0' })
     } catch (err) {
