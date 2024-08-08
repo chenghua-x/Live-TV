@@ -6,7 +6,6 @@ import (
 	"io"
 	"net"
 	"net/http"
-	"net/url"
 	"regexp"
 	"strings"
 	"sync"
@@ -212,6 +211,41 @@ var (
 		"wasusyt/6000000006000050630.m3u8":     "http://gslbserv.itv.cmvideo.cn:80/6000000006000050630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000050630&livemode=1&stbId=3",
 		"wasusyt/6000000006000180630.m3u8":     "http://gslbserv.itv.cmvideo.cn:80/6000000006000180630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000180630&livemode=1&stbId=3",
 		"wasusyt/6000000006000030630.m3u8":     "http://gslbserv.itv.cmvideo.cn:80/6000000006000030630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000030630&livemode=1&stbId=3",
+		"FifastbLive/3000000001000005308.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000005308/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000005308&livemode=1&stbId=3",
+		"FifastbLive/3000000001000005969.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000005969/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000005969&livemode=1&stbId=3",
+		"FifastbLive/3000000001000007218.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000007218/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000007218&livemode=1&stbId=3",
+		"FifastbLive/3000000001000008001.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000008001/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000008001&livemode=1&stbId=3",
+		"FifastbLive/3000000001000008176.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000008176/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000008176&livemode=1&stbId=3",
+		"FifastbLive/3000000001000008379.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000008379/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000008379&livemode=1&stbId=3",
+		"FifastbLive/3000000001000010129.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000010129/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000010129&livemode=1&stbId=3",
+		"FifastbLive/3000000001000010948.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000010948/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000010948&livemode=1&stbId=3",
+		"FifastbLive/3000000001000028638.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000028638/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000028638&livemode=1&stbId=3",
+		"FifastbLive/3000000001000031494.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000031494/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000031494&livemode=1&stbId=3",
+		"FifastbLive/3000000010000005837.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000010000005837/1.m3u8?channel-id=FifastbLive&Contentid=3000000010000005837&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011518.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011518/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011518&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011519.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011519/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011519&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011520.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011520/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011520&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011521.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011521/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011521&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011522.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011522/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011522&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011523.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011523/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011523&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011524.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011524/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011524&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011525.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011525/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011525&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011528.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011528/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011528&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011529.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011529/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011529&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011530.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011530/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011530&livemode=1&stbId=3",
+		"FifastbLive/3000000020000011531.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011531/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011531&livemode=1&stbId=3",
+		"hnbblive/2000000003000000060.m3u8":    "http://gslbserv.itv.cmvideo.cn:80/2000000003000000060/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000060&livemode=1&stbId=3",
+		"hnbblive/2000000003000000061.m3u8":    "http://gslbserv.itv.cmvideo.cn:80/2000000003000000061/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000061&livemode=1&stbId=3",
+		"hnbblive/2000000003000000062.m3u8":    "http://gslbserv.itv.cmvideo.cn:80/2000000003000000062/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000062&livemode=1&stbId=3",
+		"hnbblive/2000000003000000063.m3u8":    "http://gslbserv.itv.cmvideo.cn:80/2000000003000000063/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000063&livemode=1&stbId=3",
+		"hnbblive/2000000003000000064.m3u8":    "http://gslbserv.itv.cmvideo.cn:80/2000000003000000064/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000064&livemode=1&stbId=3",
+		"hnbblive/2000000003000000065.m3u8":    "http://gslbserv.itv.cmvideo.cn:80/2000000003000000065/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000065&livemode=1&stbId=3",
+		"ystenlive/1000000006000270001.m3u8":   "http://gslbserv.itv.cmvideo.cn:80/1000000006000270001/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270001&livemode=1&stbId=3",
+		"ystenlive/1000000006000270002.m3u8":   "http://gslbserv.itv.cmvideo.cn:80/1000000006000270002/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270002&livemode=1&stbId=3",
+		"ystenlive/1000000006000270003.m3u8":   "http://gslbserv.itv.cmvideo.cn:80/1000000006000270003/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270003&livemode=1&stbId=3",
+		"ystenlive/1000000006000270004.m3u8":   "http://gslbserv.itv.cmvideo.cn:80/1000000006000270004/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270004&livemode=1&stbId=3",
+		"ystenlive/1000000006000270005.m3u8":   "http://gslbserv.itv.cmvideo.cn:80/1000000006000270005/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270005&livemode=1&stbId=3",
+		"ystenlive/1000000006000270006.m3u8":   "http://gslbserv.itv.cmvideo.cn:80/1000000006000270006/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270006&livemode=1&stbId=3",
 	}
 
 	dnsCache         = sync.Map{}
@@ -270,13 +304,16 @@ func getHTTPResponse(requestURL string) (string, string, error) {
 		Timeout: 5 * time.Second,
 	}
 
+	var mappedHost string
+
 	// 自定义resolver
 	resolver := net.Resolver{
 		PreferGo: true,
 		Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
-			for originalHost, mappedHost := range hostMappings {
+			for originalHost, host := range hostMappings {
 				if strings.Contains(address, originalHost) {
-					ip := resolveIP(mappedHost)
+					ip := resolveIP(host)
+					mappedHost = host
 					if ip != "" {
 						address = strings.Replace(address, originalHost, ip, 1)
 					}
@@ -294,13 +331,17 @@ func getHTTPResponse(requestURL string) (string, string, error) {
 
 	resp, err := client.Get(requestURL)
 	if err != nil {
-		clearCache(requestURL) // 清除缓存失败的IP
+		if mappedHost != "" {
+			clearCache(mappedHost) // 清除缓存失败的IP
+		}
 		return "", "", err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		clearCache(requestURL) // 请求失败清除缓存
+		if mappedHost != "" {
+			clearCache(mappedHost) // 请求失败清除缓存
+		}
 		return "", "", err
 	}
 
@@ -311,11 +352,15 @@ func getHTTPResponse(requestURL string) (string, string, error) {
 
 	body, err := readResponseBody(resp)
 	if err != nil {
-		clearCache(requestURL) // 读取响应体失败时清除缓存
+		if mappedHost != "" {
+			clearCache(mappedHost) // 读取响应体失败时清除缓存
+		}
 		return "", "", err
 	}
 
-	updateCacheTime(requestURL, successCacheTime) // 成功获取响应后缓存IP
+	if mappedHost != "" {
+		updateCacheTime(mappedHost, successCacheTime) // 成功获取响应后缓存IP
+	}
 
 	return body, redirectURL, nil
 }
@@ -335,11 +380,12 @@ func resolveIP(host string) string {
 		return "" // 解析失败，返回空字符串
 	}
 
-	return ips[0].String() // 返回解析到的IP
+	ip := ips[0].String()
+	dnsCache.Store(host, cacheEntry{ip: ip, expiry: now.Add(successCacheTime)}) // 缓存解析到的IP
+	return ip
 }
 
-func updateCacheTime(requestURL string, duration time.Duration) {
-	host := extractHost(requestURL)
+func updateCacheTime(host string, duration time.Duration) {
 	if entry, found := dnsCache.Load(host); found {
 		cachedEntry := entry.(cacheEntry)
 		cachedEntry.expiry = time.Now().Add(duration) // 更新缓存过期时间
@@ -347,17 +393,8 @@ func updateCacheTime(requestURL string, duration time.Duration) {
 	}
 }
 
-func clearCache(requestURL string) {
-	host := extractHost(requestURL)
+func clearCache(host string) {
 	dnsCache.Delete(host) // 删除缓存
-}
-
-func extractHost(requestURL string) string {
-	parsedURL, err := url.Parse(requestURL)
-	if err != nil {
-		return ""
-	}
-	return parsedURL.Host
 }
 
 func readResponseBody(resp *http.Response) (string, error) {

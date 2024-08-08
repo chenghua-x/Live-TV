@@ -200,6 +200,41 @@ const iptvProgram = {
     "wasusyt/6000000006000050630.m3u8": "http://gslbserv.itv.cmvideo.cn:80/6000000006000050630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000050630&livemode=1&stbId=3",
     "wasusyt/6000000006000180630.m3u8": "http://gslbserv.itv.cmvideo.cn:80/6000000006000180630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000180630&livemode=1&stbId=3",
     "wasusyt/6000000006000030630.m3u8": "http://gslbserv.itv.cmvideo.cn:80/6000000006000030630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000030630&livemode=1&stbId=3",
+    "FifastbLive/3000000001000005308.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000005308/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000005308&livemode=1&stbId=3",
+    "FifastbLive/3000000001000005969.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000005969/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000005969&livemode=1&stbId=3",
+    "FifastbLive/3000000001000007218.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000007218/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000007218&livemode=1&stbId=3",
+    "FifastbLive/3000000001000008001.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000008001/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000008001&livemode=1&stbId=3",
+    "FifastbLive/3000000001000008176.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000008176/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000008176&livemode=1&stbId=3",
+    "FifastbLive/3000000001000008379.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000008379/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000008379&livemode=1&stbId=3",
+    "FifastbLive/3000000001000010129.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000010129/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000010129&livemode=1&stbId=3",
+    "FifastbLive/3000000001000010948.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000010948/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000010948&livemode=1&stbId=3",
+    "FifastbLive/3000000001000028638.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000028638/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000028638&livemode=1&stbId=3",
+    "FifastbLive/3000000001000031494.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000001000031494/1.m3u8?channel-id=FifastbLive&Contentid=3000000001000031494&livemode=1&stbId=3",
+    "FifastbLive/3000000010000005837.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000010000005837/1.m3u8?channel-id=FifastbLive&Contentid=3000000010000005837&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011518.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011518/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011518&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011519.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011519/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011519&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011520.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011520/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011520&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011521.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011521/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011521&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011522.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011522/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011522&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011523.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011523/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011523&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011524.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011524/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011524&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011525.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011525/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011525&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011528.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011528/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011528&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011529.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011529/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011529&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011530.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011530/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011530&livemode=1&stbId=3",
+    "FifastbLive/3000000020000011531.m3u8": "http://gslbserv.itv.cmvideo.cn:80/3000000020000011531/1.m3u8?channel-id=FifastbLive&Contentid=3000000020000011531&livemode=1&stbId=3",
+    "hnbblive/2000000003000000060.m3u8": "http://gslbserv.itv.cmvideo.cn:80/2000000003000000060/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000060&livemode=1&stbId=3",
+    "hnbblive/2000000003000000061.m3u8": "http://gslbserv.itv.cmvideo.cn:80/2000000003000000061/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000061&livemode=1&stbId=3",
+    "hnbblive/2000000003000000062.m3u8": "http://gslbserv.itv.cmvideo.cn:80/2000000003000000062/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000062&livemode=1&stbId=3",
+    "hnbblive/2000000003000000063.m3u8": "http://gslbserv.itv.cmvideo.cn:80/2000000003000000063/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000063&livemode=1&stbId=3",
+    "hnbblive/2000000003000000064.m3u8": "http://gslbserv.itv.cmvideo.cn:80/2000000003000000064/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000064&livemode=1&stbId=3",
+    "hnbblive/2000000003000000065.m3u8": "http://gslbserv.itv.cmvideo.cn:80/2000000003000000065/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000065&livemode=1&stbId=3",
+    "ystenlive/1000000006000270001.m3u8": "http://gslbserv.itv.cmvideo.cn:80/1000000006000270001/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270001&livemode=1&stbId=3",
+    "ystenlive/1000000006000270002.m3u8": "http://gslbserv.itv.cmvideo.cn:80/1000000006000270002/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270002&livemode=1&stbId=3",
+    "ystenlive/1000000006000270003.m3u8": "http://gslbserv.itv.cmvideo.cn:80/1000000006000270003/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270003&livemode=1&stbId=3",
+    "ystenlive/1000000006000270004.m3u8": "http://gslbserv.itv.cmvideo.cn:80/1000000006000270004/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270004&livemode=1&stbId=3",
+    "ystenlive/1000000006000270005.m3u8": "http://gslbserv.itv.cmvideo.cn:80/1000000006000270005/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270005&livemode=1&stbId=3",
+    "ystenlive/1000000006000270006.m3u8": "http://gslbserv.itv.cmvideo.cn:80/1000000006000270006/1.m3u8?channel-id=ystenlive&Contentid=1000000006000270006&livemode=1&stbId=3",
 }
 
 
@@ -229,11 +264,11 @@ const staticLookup = async (hostname, opts, cb) => {
 
     // new lookup
     const host = hostMapping[hostname] || hostname // redirect resolve
-    dns.lookup(host, {...opts, all: true, family: 4}, (err, results, family) => {
+    dns.lookup(host, { ...opts, all: true, family: 4 }, (err, results, family) => {
         if (results?.length > 0) {
             // random one result
             const address = results[Math.floor(Math.random() * results.length)]
-            dnsCache.set(hostname, {address, expired: Date.now() + CACHE_TIME})
+            dnsCache.set(hostname, { address, expired: Date.now() + CACHE_TIME })
             cb(err, opts.all ? [address] : address.address, address.family)
         } else {
             cb(err, results, family)
@@ -252,7 +287,7 @@ export async function handleMain(req, reply, cdn, rid) {
         return
     }
 
-    try{
+    try {
         reply.finalReqUrl = new URL(programMainUrl)
         const resp = await fetch(programMainUrl, {
             signal: AbortSignal.timeout(10000),
@@ -265,7 +300,7 @@ export async function handleMain(req, reply, cdn, rid) {
         if (!resp.ok) {
             reply.code(resp.status).send(resp.statusText)
             return
-        } 
+        }
 
         const tsList = await resp.text()
         const rootPath = `${opts.proto || req.protocol}://${req.hostname}`
@@ -277,9 +312,9 @@ export async function handleMain(req, reply, cdn, rid) {
                 return line
             }
         }).join('\n')
-            
+
         reply.code(200).send(newList)
-    } catch(e) {
+    } catch (e) {
         req.log.error(e)
         reply.code(500).send('Internal Server Error')
     }
@@ -300,12 +335,12 @@ export async function handleTs(req, reply, ts, wsTime) {
         if (!resp.ok) {
             reply.code(resp.status).send(resp.statusText)
             return
-        } 
+        }
 
         reply.header('Content-Type', resp.headers.get('Content-Type'))
         reply.header('Content-Length', resp.headers.get('Content-Length'))
         return reply.send(resp.body)
-    } catch(e) {
+    } catch (e) {
         req.log.error(e)
         reply.code(500).send('Internal Server Error')
     }
@@ -316,7 +351,7 @@ export function setup(app, _opts) {
     app.addHook('onResponse', (request, reply, done) => {
         const finalReqUrl = reply.finalReqUrl
         if (finalReqUrl) {
-            if(reply.statusCode >= 400 || reply.elapsedTime > 2000) {
+            if (reply.statusCode >= 400 || reply.elapsedTime > 2000) {
                 app.log.warn('Remove DNS cache for ' + finalReqUrl.hostname);
                 invalidateCache(finalReqUrl.hostname)
             } else {
