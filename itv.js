@@ -4,11 +4,11 @@ import fetch from 'node-fetch'
 
 
 const hostMapping = {
-    "cache.ott.ystenlive.itv.cmvideo.cn": "feiyangdigital.tg.ystenlive.ottdns.com",
-    "cache.ott.bestlive.itv.cmvideo.cn": "feiyangdigital.tg.bestlive.ottdns.com",
-    "cache.ott.wasulive.itv.cmvideo.cn": "feiyangdigital.tg.wasulive.ottdns.com",
-    "cache.ott.fifalive.itv.cmvideo.cn": "feiyangdigital.tg.fifalive.ottdns.com",
-    "cache.ott.hnbblive.itv.cmvideo.cn": "feiyangdigital.tg.hnbblive.ottdns.com",
+    "cache.ott.ystenlive.itv.cmvideo.cn": ["pixman.io.ystenlive.dnsany.com", "feiyangdigital.tg.ystenlive.ottdns.com"],
+    "cache.ott.bestlive.itv.cmvideo.cn": ["pixman.io.bestlive.dnsany.com", "feiyangdigital.tg.bestlive.ottdns.com"],
+    "cache.ott.wasulive.itv.cmvideo.cn": ["pixman.io.wasulive.dnsany.com", "feiyangdigital.tg.wasulive.ottdns.com"],
+    "cache.ott.fifalive.itv.cmvideo.cn": ["pixman.io.fifalive.dnsany.com", "feiyangdigital.tg.fifalive.ottdns.com"],
+    "cache.ott.hnbblive.itv.cmvideo.cn": ["pixman.io.hnbblive.dnsany.com", "feiyangdigital.tg.hnbblive.ottdns.com"],
 }
 
 const iptvProgram = {
@@ -263,17 +263,23 @@ const staticLookup = async (hostname, opts, cb) => {
     }
 
     // new lookup
-    const host = hostMapping[hostname] || hostname // redirect resolve
-    dns.lookup(host, { ...opts, all: true, family: 4 }, (err, results, family) => {
-        if (results?.length > 0) {
-            // random one result
-            const address = results[Math.floor(Math.random() * results.length)]
-            dnsCache.set(hostname, { address, expired: Date.now() + CACHE_TIME })
-            cb(err, opts.all ? [address] : address.address, address.family)
-        } else {
-            cb(err, results, family)
-        }
-    })
+    const cdnHosts = hostMapping[hostname] || [hostname] // redirect resolve
+    //console.log('[lookup]', cdnHosts)
+    try {
+        const ps = cdnHosts.map(host => dns.promises.lookup(host, { ...opts, all: true, family: 4 }))
+        const results = (await Promise.all(ps)).flatMap(res => res)
+
+        // random one result
+        //console.log('[all address]', results)
+        const address = results[Math.floor(Math.random() * results.length)]
+        //console.log('[pick]', address)
+        dnsCache.set(hostname, { address, expired: Date.now() + CACHE_TIME })
+        cb(undefined, opts.all ? [address] : address.address, address.family)
+
+    } catch (err) {
+        cb(err)
+    }
+
 }
 
 const agent = new http.Agent({
