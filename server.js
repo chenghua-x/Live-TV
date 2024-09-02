@@ -3,7 +3,6 @@ import { getPlayList } from './list.js'
 import itv from './itv.js'
 import ysptp from './ysptp.js'
 
-
 const fastify = Fastify({
     logger: true,
     trustProxy: true,
@@ -11,6 +10,11 @@ const fastify = Fastify({
 
 const basePath = process.argv[2] ? `/${process.argv[2]}` : process.env['BASE_PATH'] ? `/${process.env['BASE_PATH']}` : ''
 const proto = process.argv[3] ? `/${process.argv[3]}` : process.env['PROTO'] ? `/${process.env['PROTO']}` : ''
+
+// Define a route for the root path
+fastify.get('/', (req, reply) => {
+    reply.send('Welcome to the Fastify server!');
+});
 
 fastify.get(`${basePath}/tv.m3u`, (req, reply) => {
     reply.header('Content-Type', 'application/octet-stream')
